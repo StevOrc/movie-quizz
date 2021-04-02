@@ -1,0 +1,12 @@
+.quiz-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.questions {
+  width: 70%;
+}
+
+.score {
+  width: 30%;
+}
