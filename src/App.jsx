@@ -4,24 +4,22 @@ import { Router, Route, Switch } from "react-router-dom";
 
 // Compnents
 import Header from "./components/Header";
-import QuizList from './components/quizz/QuizzList';
+import QuizList from "./components/quiz/QuizList";
 import MovieDetails from "./components/MovieDetail";
 
 // History
 import history from "./history";
 
 // Servie Api
-import apiMovie from './api/movieApi';
+// import apiMovie from "./api/movieApi";
 
 // Config file
-import config from './config.json';
+// import config from "./config.json";
 
 class App extends Component {
   state = {};
 
-  async componentDidMount(){
-  }
-
+  async componentDidMount() {}
 
   render() {
     return (

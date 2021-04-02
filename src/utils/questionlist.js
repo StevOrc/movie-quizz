@@ -111,4 +111,13 @@ const questionsList = [
   },
 ];
 
-export default questionsList;
+const getQuestionList = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (!questionsList.length) reject({ error: "No questions found" });
+      resolve({ data: questionsList });
+    }, 500);
+  });
+};
+
+export { getQuestionList };

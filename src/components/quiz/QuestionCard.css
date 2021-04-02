@@ -1,0 +1,16 @@
+.question-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 500px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid black;
+}
+
+.img-container {
+  width: 100%;
+  overflow: hidden;
+}

@@ -8,10 +8,13 @@ const apiMovie = axios.create({
 });
 
 apiMovie.interceptors.request.use((req) => {
-  // req.params = {
-  //   "api_key": config.api_key,
-  //   language: 'fr-FR',
-  // }
+  const params = {
+    ...req.params,
+    api_key: config.api_key,
+    language: "fr-FR",
+    include_adult: false,
+  };
+  req.params = params;
   // req.headers["Authorization"] = `Bearer ${config.Token}`;
   return req;
 });
