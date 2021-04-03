@@ -1,16 +1,29 @@
 .question-card {
   display: flex;
   flex-direction: column;
-  min-width: 100%;
-  min-height: 500px;
-  box-sizing: border-box;
-  background: #fff;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  border: 2px solid black;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 20px;
 }
 
-.img-container {
-  width: 100%;
-  overflow: hidden;
+/* .actor-image {
+  border-radius: 3px;
+  border: 1px solid #eee;
+  padding: 2px;
+  background: #6a89cc !important;
+  cursor: pointer;
+} */
+
+.image-actor-container {
+  display: flex;
+  justify-content: space-around;
+  min-width: 500px;
+}
+
+.image-actor-container img {
+  border-radius: 3px;
+  border: 1px solid #eee;
+  padding: 4px;
+  cursor: pointer;
 }

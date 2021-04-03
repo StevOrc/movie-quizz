@@ -2,12 +2,15 @@ import "./QuestionCard.css";
 import React, { useEffect, useState } from "react";
 import apiMovie from "../../api/movieApi";
 
-const QuestionCard = ({ question }) => {
-  const [movie, setMovie] = useState(null);
+const QuestionCard = ({ question, onClickAnswer, numQuestion }) => {
   const [imgUrl, setImgurl] = useState("");
+  const [isLoadedMovieImg, setIsLoadedMovieImg] = useState(false);
+  const [isActorImgLoaded, setIsActorImgLoaded] = useState(false);
+  const [actorsImages, setActorsImages] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [indexAnwser, setIndexAnwser] = useState(0);
 
   // We use the hook useEffect to make a request to the moviedb API to get all information of the movie for the question
-  // We only trigger the hook when the created and render
   useEffect(() => {
     const fetcMovieByName = async (title) => {
       try {
@@ -17,53 +20,100 @@ const QuestionCard = ({ question }) => {
           },
         });
 
-        const url = `https://image.tmdb.org/t/p/w500/${data.results[0].backdrop_path}`;
-
-        // Set piece of state variables
-        setMovie(data.results[0]);
+        const url = `https://image.tmdb.org/t/p/w342/${data.results[0].backdrop_path}`;
         setImgurl(url);
+        setIsLoadedMovieImg(true);
       } catch (error) {
         console.log("ERROR", error);
       }
     };
 
-    fetcMovieByName("Titanic");
-  }, []);
+    if (question) {
+      fetcMovieByName(question.title);
+    }
+  }, [question]);
+
+  useEffect(() => {
+    const images = [];
+    const fetchData = async (actor, numAnswer) => {
+      const { data } = await apiMovie.get("/search/person", {
+        params: {
+          query: actor,
+        },
+      });
+      const urlActor = `https://image.tmdb.org/t/p/w92/${data.results[0].profile_path}`;
+      images.push(urlActor);
+      if (numAnswer == question.answers.length) {
+        setActorsImages(images);
+        setIsActorImgLoaded(true);
+      }
+    };
+    question.answers.forEach((answer) => {
+      const numAnswer = Object.keys(answer)[0];
+      const actorName = answer[numAnswer];
+      fetchData(actorName, numAnswer);
+    });
+  }, [question]);
+
+  const onImgClick = (anwser, numAnswer) => {
+    console.log("AAAAAAAAAAAAAAAA", anwser);
+    setIndexAnwser(anwser[numAnswer]);
+    setIsDisabled(false);
+  };
+
+  // Map on the property 'reponses' of the question object
+  const renderAnswer =
+    !isLoadedMovieImg && !isActorImgLoaded
+      ? null
+      : question.answers.map((answer) => {
+          const numAnswer = Object.keys(answer)[0];
+          return (
+            <React.Fragment key={numAnswer}>
+              <div className="card">
+                <div className="image">
+                  <img
+                    src={actorsImages[numAnswer - 1]}
+                    onClick={() => onImgClick(answer, numAnswer)}
+                    style={
+                      indexAnwser == answer[numAnswer]
+                        ? { backgroundColor: "red" }
+                        : { backgroundColor: "#2d3436" }
+                    }
+                  />
+                </div>
+                <div className="extra">{answer[numAnswer]}</div>
+              </div>
+            </React.Fragment>
+          );
+        });
 
   return (
     <React.Fragment>
-      <div className="ui card question-card">
-        <div className="image">
-          <img src={`${imgUrl}`} alt="" />
+      {isLoadedMovieImg && isActorImgLoaded ? (
+        <div className="question-card">
+          <div className="ui centered card">
+            <div className="image">
+              <img src={imgUrl} alt="title" />
+            </div>
+            <div className="content">
+              <div>{question.title}</div>
+            </div>
+          </div>
+          <h2 className="header">
+            {numQuestion}) {question.label}
+          </h2>
+          <div className="image-actor-container"> {renderAnswer} </div>
+          <button
+            disabled={isDisabled}
+            style={{ marginTop: "25px" }}
+            className="positive ui button"
+          >
+            VALIDER
+          </button>
         </div>
-        <div className="content">
-          <div className="header">Watchmen</div>
-          <div className="description">
-            In a gritty and alternate 1985 the glory days of costumed vigilantes
-            have been brought to a close by a government crackdown, but after
-            one of the masked veterans is brutally murdered an investigation
-            into the killer is initiated.
-          </div>
-        </div>
-        <div className="ui four bottom attached buttons">
-          <div className="ui button img-container">
-            <p>Brad Pitt</p>
-            <img width="160" src={`${imgUrl}`} />
-          </div>
-          <div className="ui button img-container">
-            <p>Brad Pitt</p>
-            <img width="160" src={`${imgUrl}`} />
-          </div>
-          <div className="ui button img-container">
-            <p>Brad Pitt</p>
-            <img width="160" src={`${imgUrl}`} />
-          </div>
-          <div className="ui button img-container">
-            <p>Brad Pitt</p>
-            <img width="160" src={`${imgUrl}`} />
-          </div>
-        </div>
-      </div>
+      ) : (
+        <div>Loading images...</div>
+      )}
     </React.Fragment>
   );
 };
