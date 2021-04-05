@@ -12,7 +12,8 @@ class QuizList extends Component {
     error: null,
     number: 0,
     gameOver: false,
-    score: 0,
+    currentScore: 0,
+    isGoodAnser: false,
   };
 
   async componentDidMount() {
@@ -26,7 +27,15 @@ class QuizList extends Component {
     }
   }
 
-  checkAnswer = (answer) => {};
+  checkAnswer = (answer) => {
+    const numAnswer = Object.keys(answer)[0];
+    if (this.state.questions[this.state.number].goodAnswer == numAnswer) {
+      this.setState({
+        isGoodAnser: true,
+        currentScore: this.state.currentScore + 1,
+      });
+    }
+  };
 
   renderQuestions = () => {
     if (!this.state.questions.length) return <div>Loading...</div>;
@@ -67,9 +76,11 @@ class QuizList extends Component {
                 numQuestion={this.state.number + 1}
               />
             </div>
-            <div className="score">
-              <Score />
-            </div>
+            <Score
+              scoreMax={this.state.questions.length}
+              currentScore={this.state.currentScore}
+              isGoodAnswer={this.state.isGoodAnser}
+            />
           </div>
         )}
 

@@ -27,3 +27,7 @@
   padding: 4px;
   cursor: pointer;
 }
+
+.image-card.selected img {
+  background-color: green;
+}

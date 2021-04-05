@@ -1,17 +1,21 @@
 import "./QuestionCard.css";
 import React, { useEffect, useState } from "react";
 import apiMovie from "../../api/movieApi";
+import ImageActor from "./ImageActor";
 
 const QuestionCard = ({ question, onClickAnswer, numQuestion }) => {
   const [imgUrl, setImgurl] = useState("");
   const [isLoadedMovieImg, setIsLoadedMovieImg] = useState(false);
-  const [isActorImgLoaded, setIsActorImgLoaded] = useState(false);
-  const [actorsImages, setActorsImages] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [indexAnwser, setIndexAnwser] = useState(0);
+  const [indexAnswer, setIndexAnswer] = useState(0);
+  const [userAnswer, setUserAnswer] = useState(null);
+  const [answered, setAnswered] = useState(false);
 
   // We use the hook useEffect to make a request to the moviedb API to get all information of the movie for the question
   useEffect(() => {
+    setAnswered(false);
+    setIsDisabled(true);
+    setIndexAnswer(0);
     const fetcMovieByName = async (title) => {
       try {
         const { data } = await apiMovie.get("/search/movie", {
@@ -33,63 +37,43 @@ const QuestionCard = ({ question, onClickAnswer, numQuestion }) => {
     }
   }, [question]);
 
-  useEffect(() => {
-    const images = [];
-    const fetchData = async (actor, numAnswer) => {
-      const { data } = await apiMovie.get("/search/person", {
-        params: {
-          query: actor,
-        },
-      });
-      const urlActor = `https://image.tmdb.org/t/p/w92/${data.results[0].profile_path}`;
-      images.push(urlActor);
-      if (numAnswer == question.answers.length) {
-        setActorsImages(images);
-        setIsActorImgLoaded(true);
-      }
-    };
-    question.answers.forEach((answer) => {
-      const numAnswer = Object.keys(answer)[0];
-      const actorName = answer[numAnswer];
-      fetchData(actorName, numAnswer);
-    });
-  }, [question]);
-
-  const onImgClick = (anwser, numAnswer) => {
-    console.log("AAAAAAAAAAAAAAAA", anwser);
-    setIndexAnwser(anwser[numAnswer]);
+  // Handle on image click
+  const onImgClick = (answer, numAnswer) => {
+    setIndexAnswer(answer[numAnswer]);
     setIsDisabled(false);
+    setUserAnswer(answer);
   };
 
-  // Map on the property 'reponses' of the question object
-  const renderAnswer =
-    !isLoadedMovieImg && !isActorImgLoaded
-      ? null
-      : question.answers.map((answer) => {
-          const numAnswer = Object.keys(answer)[0];
-          return (
-            <React.Fragment key={numAnswer}>
-              <div className="card">
-                <div className="image">
-                  <img
-                    src={actorsImages[numAnswer - 1]}
-                    onClick={() => onImgClick(answer, numAnswer)}
-                    style={
-                      indexAnwser == answer[numAnswer]
-                        ? { backgroundColor: "red" }
-                        : { backgroundColor: "#2d3436" }
-                    }
-                  />
-                </div>
-                <div className="extra">{answer[numAnswer]}</div>
+  // Handle validate answer
+  const onButtonClick = () => {
+    onClickAnswer(userAnswer);
+    setAnswered(true);
+  };
+
+  const renderAnswer = !isLoadedMovieImg
+    ? null
+    : question.answers.map((answer) => {
+        const numAnswer = Object.keys(answer)[0];
+        return (
+          <React.Fragment key={numAnswer}>
+            <div className="card">
+              <div
+                className={`image-card ${
+                  indexAnswer == answer[numAnswer] ? "selected" : ""
+                }`}
+                onClick={() => onImgClick(answer, numAnswer)}
+              >
+                <ImageActor actor={answer} />
               </div>
-            </React.Fragment>
-          );
-        });
+              <div className="extra">{answer[numAnswer]}</div>
+            </div>
+          </React.Fragment>
+        );
+      });
 
   return (
     <React.Fragment>
-      {isLoadedMovieImg && isActorImgLoaded ? (
+      {isLoadedMovieImg ? (
         <div className="question-card">
           <div className="ui centered card">
             <div className="image">
@@ -102,11 +86,12 @@ const QuestionCard = ({ question, onClickAnswer, numQuestion }) => {
           <h2 className="header">
             {numQuestion}) {question.label}
           </h2>
-          <div className="image-actor-container"> {renderAnswer} </div>
+          <div className="image-actor-container">{renderAnswer}</div>
           <button
-            disabled={isDisabled}
+            disabled={answered || isDisabled}
             style={{ marginTop: "25px" }}
             className="positive ui button"
+            onClick={onButtonClick}
           >
             VALIDER
           </button>
