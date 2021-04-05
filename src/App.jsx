@@ -1,3 +1,4 @@
+import "./App.css";
 import React, { Component } from "react";
 // Routing
 import { Router, Route, Switch } from "react-router-dom";
@@ -9,12 +10,7 @@ import MovieDetails from "./components/MovieDetail";
 
 // History
 import history from "./history";
-
-// Servie Api
-// import apiMovie from "./api/movieApi";
-
-// Config file
-// import config from "./config.json";
+import WelcomePage from "./components/WelcomePage";
 
 class App extends Component {
   state = {};
@@ -30,7 +26,8 @@ class App extends Component {
           </div>
           <div className="ui container" style={{ marginTop: "25px" }}>
             <Switch>
-              <Route path="/" exact component={QuizList} />
+              <Route path="/" exact component={WelcomePage} />
+              <Route path="/quiz" component={QuizList} />
               <Route path="/movie/:id" component={MovieDetails} />
             </Switch>
           </div>

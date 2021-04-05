@@ -83,11 +83,16 @@ class QuizList extends Component {
             />
           </div>
         )}
-
         {!this.state.gameOver &&
         !this.state.loading &&
         this.state.number !== this.state.questions.length - 1 ? (
-          <button onClick={() => this.nextQuestion()}>Next Question</button>
+          <button
+            className="ui green button"
+            onClick={() => this.nextQuestion()}
+            style={{ marginTop: "10px", textAlign: "center" }}
+          >
+            Suivante
+          </button>
         ) : null}
       </React.Fragment>
     );
