@@ -1,19 +1,8 @@
 import "./WelcomePage.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const WelcomePage = () => {
-  useEffect(() => {
-    const onWindowUnload = () => {
-      localStorage.clear();
-    };
-    window.addEventListener("beforeunload", onWindowUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", onWindowUnload);
-    };
-  }, []);
-
   return (
     <div className="welcome-page">
       <div className="ui vertical stripe segment">
