@@ -6,16 +6,8 @@ import ImageActor from "./ImageActor";
 const QuestionYesNo = ({ question, onClickAnswer, numQuestion }) => {
   const [imgUrl, setImgurl] = useState("");
   const [isLoadedMovieImg, setIsLoadedMovieImg] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [indexAnswer, setIndexAnswer] = useState(0);
-  const [userAnswer, setUserAnswer] = useState(null);
-  const [answered, setAnswered] = useState(false);
 
   useEffect(() => {
-    console.log("AAAAAAAAAAAAAAAAAA actorname", question.actorName);
-    setAnswered(false);
-    setIsDisabled(true);
-    setIndexAnswer(0);
     const fetcMovieByName = async (title) => {
       try {
         const { data } = await apiMovie.get("/search/movie", {
@@ -40,7 +32,6 @@ const QuestionYesNo = ({ question, onClickAnswer, numQuestion }) => {
   // Handle on click true false
   const onTrueOrFalse = (answer) => {
     onClickAnswer(answer);
-    setAnswered(true);
   };
 
   return (

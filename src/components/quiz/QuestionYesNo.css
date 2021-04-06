@@ -5,6 +5,10 @@
   margin-top: 20px;
 }
 
+.question-card {
+  min-height: 598.708px;
+}
+
 .true-icon {
   color: #27ae60;
 }

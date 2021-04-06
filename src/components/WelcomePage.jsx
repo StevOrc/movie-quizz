@@ -14,7 +14,10 @@ const WelcomePage = () => {
             parmis les choix d'acteur proposés ou dire si un acteur à jouer dans
             le film. Chaque bonne réponse rapporte 1 point.
           </p>
-          <h3>Bonne chance :)</h3>
+          <h3>
+            Vous avez 1 minute pour répondre à toutes les quesion, bonne chance
+            :)
+          </h3>
           <Link to="/quiz" className="ui large green button">
             Commencer !
           </Link>

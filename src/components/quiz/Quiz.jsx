@@ -19,6 +19,9 @@ class Quiz extends Component {
   };
 
   async componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isGameOver: true });
+    }, 1000 * 60);
     this.setState({
       isGameOver: false,
       currentScore: 0,
@@ -73,7 +76,6 @@ class Quiz extends Component {
     return (
       <div className="quiz-list">
         <div className="questions">
-          <h1>Quiz App</h1>
           {this.state.questions[this.state.number].answers.length === 2 ? (
             <QuestionYesNo
               question={this.state.questions[this.state.number]}
@@ -102,7 +104,6 @@ class Quiz extends Component {
   };
 
   render() {
-    console.log("RENDER RENDER", this.state);
     return (
       <React.Fragment>
         {this.state.loading ? (
@@ -116,17 +117,6 @@ class Quiz extends Component {
             onRetry={this.handleOnRetry}
           />
         )}
-        {/* {!this.state.gameOver &&
-        !this.state.loading &&
-        this.state.number !== this.state.questions.length - 1 ? (
-          <button
-            className="ui green button"
-            onClick={() => this.nextQuestion()}
-            style={{ marginTop: "10px", textAlign: "center" }}
-          >
-            Suivante
-          </button>
-        ) : null} */}
       </React.Fragment>
     );
   }
