@@ -45,18 +45,6 @@ class Quiz extends Component {
     }
   }
 
-  checkAnswer = (answer) => {
-    const numAnswer = Object.keys(answer)[0];
-    this.state.questions[this.state.number].isAnswered = true;
-    if (this.state.questions[this.state.number].goodAnswer == numAnswer) {
-      this.setState({
-        isGoodAnser: true,
-        currentScore: this.state.currentScore + 1,
-      });
-    }
-    this.nextQuestion();
-  };
-
   renderQuestions = () => {
     if (!this.state.questions.length) return <div>Loading...</div>;
     else
@@ -71,6 +59,19 @@ class Quiz extends Component {
       });
   };
 
+  checkAnswer = (answer) => {
+    const numAnswer = Object.keys(answer)[0];
+    this.state.questions[this.state.number].isAnswered = true;
+    this.setState({isGoodAnser: false});
+    if (this.state.questions[this.state.number].goodAnswer == numAnswer) {
+      this.setState({
+        isGoodAnser: true,
+        currentScore: this.state.currentScore + 1,
+      });
+    }
+    this.nextQuestion();
+  };
+
   nextQuestion = () => {
 
     let countFalse = 0;
@@ -79,7 +80,6 @@ class Quiz extends Component {
     });
     if(countFalse === 0) this.setState({isAllQuestionAnswered: true})
     const nextQuestion = this.state.number + 1;
-    console.log("AAAAAAAAAAAAAAAA", countFalse);
     if (countFalse === 0) {
       this.setState({ isGameOver: true });
     } else if (nextQuestion === this.state.questions.length){
