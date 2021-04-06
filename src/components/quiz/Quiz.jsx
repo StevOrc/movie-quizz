@@ -72,6 +72,11 @@ class Quiz extends Component {
     }
   };
 
+  previousQuestion = () => {
+    const previousQuestion = this.state.number - 1;
+    this.setState({ number: previousQuestion });
+  };
+
   renderQuesion = () => {
     return (
       <div className="quiz-list">
@@ -117,6 +122,24 @@ class Quiz extends Component {
             onRetry={this.handleOnRetry}
           />
         )}
+        {!this.state.gameOver && !this.state.loading ? (
+          <div className="btn-container">
+            <button
+              disabled={this.state.number === 0}
+              onClick={this.previousQuestion}
+              className="circular ui icon blue button"
+            >
+              <i className="angle left icon"></i>
+            </button>
+            <button
+              disabled={this.state.number === this.state.questions.length - 1}
+              className="circular ui icon blue button"
+              onClick={this.nextQuestion}
+            >
+              <i className="angle right icon"></i>
+            </button>
+          </div>
+        ) : null}
       </React.Fragment>
     );
   }

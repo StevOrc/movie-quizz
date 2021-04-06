@@ -21,19 +21,19 @@ const questionsList = [
     goodAnswer: "3",
     score: 2,
   },
-  // {
-  //   id: 3,
-  //   title: "Il était une fois le bronx",
-  //   label: "Qui à réalisé le film 'Il était une fois le bronx' ?",
-  //   answers: [
-  //     { 1: "De Niro" },
-  //     { 2: "Martin Scorsese" },
-  //     { 3: "Brian De Palma" },
-  //     { 4: "Sergio Leone" },
-  //   ],
-  //   goodAnswer: "1",
-  //   score: 1,
-  // },
+  {
+    id: 3,
+    title: "Il était une fois le bronx",
+    label: "Qui à réalisé le film 'Il était une fois le bronx' ?",
+    answers: [
+      { 1: "De Niro" },
+      { 2: "Martin Scorsese" },
+      { 3: "Brian De Palma" },
+      { 4: "Sergio Leone" },
+    ],
+    goodAnswer: "1",
+    score: 1,
+  },
   // {
   //   id: 4,
   //   title: "the shawshank redemption",
