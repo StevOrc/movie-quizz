@@ -16,9 +16,15 @@ class Quiz extends Component {
     isGameOver: true,
     currentScore: 0,
     isGoodAnser: false,
+    isAllQuestionAnswered: false
   };
 
   async componentDidMount() {
+    if(this.state.questions.length > 0){
+      this.state.questions.forEach( q => {
+        q.isAnswered = false;
+      })
+    }
     setTimeout(() => {
       this.setState({ isGameOver: true });
     }, 1000 * 60);
@@ -27,6 +33,7 @@ class Quiz extends Component {
       currentScore: 0,
       isGoodAnser: false,
       number: 0,
+      isAllQuestionAnswered: false
     });
     try {
       if (!this.state.questions.length) {
@@ -65,11 +72,21 @@ class Quiz extends Component {
   };
 
   nextQuestion = () => {
+
+    let countFalse = 0;
+    this.state.questions.forEach( q => {
+      if(!q.isAnswered) countFalse++;
+    });
+    if(countFalse === 0) this.setState({isAllQuestionAnswered: true})
     const nextQuestion = this.state.number + 1;
-    if (nextQuestion === this.state.questions.length) {
+    console.log("AAAAAAAAAAAAAAAA", countFalse);
+    if (countFalse === 0) {
       this.setState({ isGameOver: true });
+    } else if (nextQuestion === this.state.questions.length){
+      return;
     } else {
       this.setState({ number: nextQuestion });
+
     }
   };
 
