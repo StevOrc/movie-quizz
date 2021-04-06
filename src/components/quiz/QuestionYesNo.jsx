@@ -34,6 +34,29 @@ const QuestionYesNo = ({ question, onClickAnswer, numQuestion }) => {
     onClickAnswer(answer);
   };
 
+  const renderButtons = () => {
+    if (!question.isAnswered)
+      return (
+        <div className="ui buttons">
+          <button
+            disabled={question.isAnswered}
+            className="ui positive button"
+            onClick={() => onTrueOrFalse(question.answers[0])}
+          >
+            Vrai
+          </button>
+          <div className="or" data-text="ou"></div>
+          <button
+            disabled={question.isAnswered}
+            className="ui red button"
+            onClick={() => onTrueOrFalse(question.answers[1])}
+          >
+            Faux
+          </button>
+        </div>
+      );
+  };
+
   return (
     <React.Fragment>
       {isLoadedMovieImg ? (
@@ -51,21 +74,7 @@ const QuestionYesNo = ({ question, onClickAnswer, numQuestion }) => {
           </h2>
           <ImageActor actor={question.actorName} />
           <div className="button-container">
-            <div className="ui buttons">
-              <button
-                className="ui positive button"
-                onClick={() => onTrueOrFalse(question.answers[0])}
-              >
-                Vrai
-              </button>
-              <div className="or" data-text="ou"></div>
-              <button
-                className="ui red button"
-                onClick={() => onTrueOrFalse(question.answers[1])}
-              >
-                Faux
-              </button>
-            </div>
+            <div className="ui buttons">{renderButtons()}</div>
           </div>
           <div className="image-actor-container"></div>
         </div>

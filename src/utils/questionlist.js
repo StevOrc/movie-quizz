@@ -1,15 +1,25 @@
 const questionsList = [
   {
     id: 1,
+    isAnswered: false,
     title: "HEAT",
     label: "Al Pacino à joué dans Heat ?",
     answers: [{ 1: "1" }, { 2: "2" }],
     goodAnswer: "1",
     actorName: "Al Pacino",
-    score: 2,
+  },
+  {
+    id: 4,
+    isAnswered: false,
+    title: "the shawshank redemption",
+    label: "Denzel Washington a-t-il jouer dans 'Les Evadés' ?",
+    answers: [{ 1: "Vrai" }, { 2: "Faux" }],
+    goodAnswer: "2",
+    actorName: "Denzel Washington",
   },
   {
     id: 2,
+    isAnswered: false,
     title: "Le seigneur des anneaux",
     label: "Qui a joué le rôle de Gandalf dans la seigneur des anneaux ?",
     answers: [
@@ -19,10 +29,10 @@ const questionsList = [
       { 4: "Elijah Wood" },
     ],
     goodAnswer: "3",
-    score: 2,
   },
   {
     id: 3,
+    isAnswered: false,
     title: "Il était une fois le bronx",
     label: "Qui à réalisé le film 'Il était une fois le bronx' ?",
     answers: [
@@ -32,30 +42,20 @@ const questionsList = [
       { 4: "Sergio Leone" },
     ],
     goodAnswer: "1",
-    score: 1,
   },
-  // {
-  //   id: 4,
-  //   title: "the shawshank redemption",
-  //   label: "Denzel Washington a-t-il jouer dans 'Les Evadés' ?",
-  //   answers: [{ 1: "Vrai" }, { 2: "Faux" }],
-  //   goodAnswer: "2",
-  //   actorName: "Denzel Washington",
-  //   score: 1,
-  // },
-  // {
-  //   id: 5,
-  //   title: "Le bon, la brute et le truand",
-  //   label: "Qui à réalisé le film Le Bon, La Brute et le Truand?",
-  //   answers: [
-  //     { 1: "Martin Scorsese" },
-  //     { 2: "Brian De Palma" },
-  //     { 3: "Clint Eastwood" },
-  //     { 4: "Sergio Leone" },
-  //   ],
-  //   goodAnswer: "4",
-  //   score: 3,
-  // },
+  {
+    id: 5,
+    isAnswered: false,
+    title: "Le bon, la brute et le truand",
+    label: "Qui à réalisé le film Le Bon, La Brute et le Truand?",
+    answers: [
+      { 1: "Martin Scorsese" },
+      { 2: "Brian De Palma" },
+      { 3: "Clint Eastwood" },
+      { 4: "Sergio Leone" },
+    ],
+    goodAnswer: "4",
+  },
 ];
 
 const getQuestionList = () => {

@@ -71,6 +71,20 @@ const QuestionCard = ({ question, onClickAnswer, numQuestion }) => {
         );
       });
 
+  const renderButton = () => {
+    if (!question.isAnswered)
+      return (
+        <button
+          disabled={answered || isDisabled}
+          style={{ marginTop: "25px" }}
+          className="positive ui button"
+          onClick={onButtonClick}
+        >
+          VALIDER
+        </button>
+      );
+  };
+
   return (
     <React.Fragment>
       {isLoadedMovieImg ? (
@@ -87,14 +101,7 @@ const QuestionCard = ({ question, onClickAnswer, numQuestion }) => {
             {numQuestion}) {question.label}
           </h2>
           <div className="image-actor-container">{renderAnswer}</div>
-          <button
-            disabled={answered || isDisabled}
-            style={{ marginTop: "25px" }}
-            className="positive ui button"
-            onClick={onButtonClick}
-          >
-            VALIDER
-          </button>
+          {renderButton()}
         </div>
       ) : (
         <div>Loading images...</div>
