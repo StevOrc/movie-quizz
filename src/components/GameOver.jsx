@@ -3,6 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const GameOver = ({ score, maxScore, onRetry }) => {
+  const highscore = sessionStorage.getItem("highscore");
+  if (!highscore) {
+    sessionStorage.setItem("highscore", score);
+  } else {
+    if (score > highscore) sessionStorage.setItem("highscore", score);
+  }
   return (
     <div className="game-over">
       <div className="welcome-page">

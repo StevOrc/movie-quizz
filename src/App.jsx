@@ -15,8 +15,6 @@ import WelcomePage from "./components/WelcomePage";
 class App extends Component {
   state = {};
 
-  async componentDidMount() {}
-
   render() {
     return (
       <React.Fragment>

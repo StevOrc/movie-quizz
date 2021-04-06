@@ -19,9 +19,9 @@ class Quiz extends Component {
   };
 
   async componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isGameOver: true });
-    }, 1000 * 60);
+    // setTimeout(() => {
+    //   this.setState({ isGameOver: true });
+    // }, 1000 * 60);
     this.setState({
       isGameOver: false,
       currentScore: 0,

@@ -8,19 +8,19 @@ const questionsList = [
     actorName: "Al Pacino",
     score: 2,
   },
-  // {
-  //   id: 2,
-  //   title: "Le seigneur des anneaux",
-  //   label: "Qui a joué le rôle de Gandalf dans la seigneur des anneaux ?",
-  //   answers: [
-  //     { 1: "De Niro" },
-  //     { 2: "Orlando Bloom" },
-  //     { 3: "Ian McKellen" },
-  //     { 4: "Elijah Wood" },
-  //   ],
-  //   goodAnswer: "3",
-  //   score: 2,
-  // },
+  {
+    id: 2,
+    title: "Le seigneur des anneaux",
+    label: "Qui a joué le rôle de Gandalf dans la seigneur des anneaux ?",
+    answers: [
+      { 1: "De Niro" },
+      { 2: "Orlando Bloom" },
+      { 3: "Ian McKellen" },
+      { 4: "Elijah Wood" },
+    ],
+    goodAnswer: "3",
+    score: 2,
+  },
   // {
   //   id: 3,
   //   title: "Il était une fois le bronx",
