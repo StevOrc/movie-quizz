@@ -15,8 +15,11 @@ const ImageActor = ({ actor }) => {
       setUrlActor(urlActor);
     };
     if (actor) {
-      const actorName = actor[Object.keys(actor)[0]];
-      fetchActor(actorName);
+      if (typeof actor === "string") fetchActor(actor);
+      else {
+        const actorName = actor[Object.keys(actor)[0]];
+        fetchActor(actorName);
+      }
     }
   }, [actor]);
 

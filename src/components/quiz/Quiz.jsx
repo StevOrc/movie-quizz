@@ -1,22 +1,30 @@
-import "./QuizList.css";
+import "./Quiz.css";
 import React, { Component } from "react";
 import Score from "../Score";
 import { getQuestionList } from "../../utils/questionlist";
 import QuestionCard from "./QuestionCard";
+import QuestionYesNo from "./QuestionYesNo";
+import GameOver from "./../GameOver";
 
-class QuizList extends Component {
+class Quiz extends Component {
   state = {
     questions: [],
     error: null,
     loading: true,
     error: null,
     number: 0,
-    gameOver: false,
+    isGameOver: true,
     currentScore: 0,
     isGoodAnser: false,
   };
 
   async componentDidMount() {
+    this.setState({
+      isGameOver: false,
+      currentScore: 0,
+      isGoodAnser: false,
+      number: 0,
+    });
     try {
       if (!this.state.questions.length) {
         const { data } = await getQuestionList();
@@ -35,6 +43,7 @@ class QuizList extends Component {
         currentScore: this.state.currentScore + 1,
       });
     }
+    this.nextQuestion();
   };
 
   renderQuestions = () => {
@@ -54,10 +63,42 @@ class QuizList extends Component {
   nextQuestion = () => {
     const nextQuestion = this.state.number + 1;
     if (nextQuestion === this.state.questions.length) {
-      this.setState({ gameOver: true });
+      this.setState({ isGameOver: true });
     } else {
       this.setState({ number: nextQuestion });
     }
+  };
+
+  renderQuesion = () => {
+    return (
+      <div className="quiz-list">
+        <div className="questions">
+          <h1>Quiz App</h1>
+          {this.state.questions[this.state.number].answers.length === 2 ? (
+            <QuestionYesNo
+              question={this.state.questions[this.state.number]}
+              onClickAnswer={this.checkAnswer}
+              numQuestion={this.state.number + 1}
+            />
+          ) : (
+            <QuestionCard
+              question={this.state.questions[this.state.number]}
+              onClickAnswer={this.checkAnswer}
+              numQuestion={this.state.number + 1}
+            />
+          )}
+        </div>
+        <Score
+          scoreMax={this.state.questions.length}
+          currentScore={this.state.currentScore}
+          isGoodAnswer={this.state.isGoodAnser}
+        />
+      </div>
+    );
+  };
+
+  handleOnRetry = () => {
+    this.componentDidMount();
   };
 
   render() {
@@ -66,24 +107,16 @@ class QuizList extends Component {
       <React.Fragment>
         {this.state.loading ? (
           <div>Loading...</div>
+        ) : !this.state.isGameOver ? (
+          this.renderQuesion()
         ) : (
-          <div className="quiz-list">
-            <div className="questions">
-              <h1>Quiz App</h1>
-              <QuestionCard
-                question={this.state.questions[this.state.number]}
-                onClickAnswer={this.checkAnswer}
-                numQuestion={this.state.number + 1}
-              />
-            </div>
-            <Score
-              scoreMax={this.state.questions.length}
-              currentScore={this.state.currentScore}
-              isGoodAnswer={this.state.isGoodAnser}
-            />
-          </div>
+          <GameOver
+            score={this.state.currentScore}
+            maxScore={this.state.questions.length}
+            onRetry={this.handleOnRetry}
+          />
         )}
-        {!this.state.gameOver &&
+        {/* {!this.state.gameOver &&
         !this.state.loading &&
         this.state.number !== this.state.questions.length - 1 ? (
           <button
@@ -93,10 +126,10 @@ class QuizList extends Component {
           >
             Suivante
           </button>
-        ) : null}
+        ) : null} */}
       </React.Fragment>
     );
   }
 }
 
-export default QuizList;
+export default Quiz;

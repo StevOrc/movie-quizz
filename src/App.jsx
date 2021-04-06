@@ -5,7 +5,7 @@ import { Router, Route, Switch } from "react-router-dom";
 
 // Compnents
 import Header from "./components/Header";
-import QuizList from "./components/quiz/QuizList";
+import Quiz from "./components/quiz/Quiz";
 import MovieDetails from "./components/MovieDetail";
 
 // History
@@ -27,7 +27,7 @@ class App extends Component {
           <div className="ui container" style={{ marginTop: "25px" }}>
             <Switch>
               <Route path="/" exact component={WelcomePage} />
-              <Route path="/quiz" component={QuizList} />
+              <Route path="/quiz" component={Quiz} />
               <Route path="/movie/:id" component={MovieDetails} />
             </Switch>
           </div>
